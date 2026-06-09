@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fin — Your US paycheck, explained.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B0F1A;
+  --navy-mid: #131929;
+  --navy-card: #1A2035;
+  --navy-border: rgba(255,255,255,0.08);
+  --cream: #F5F0E8;
+  --cream-muted: #A89F90;
+  --cream-faint: #6B6358;
+  --teal: #1DBFA0;
+  --teal-dim: #0F6E5A;
+  --teal-glow: rgba(29,191,160,0.12);
+  --amber: #F0A93A;
+  --coral: #E8604A;
+  --blue: #4A8FD8;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(11,15,26,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--navy-border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--cream);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); display: inline-block; }
+.nav-links { display: flex; align-items: center; gap: 1.5rem; }
+.nav-links a { color: var(--cream-muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--cream); }
+.nav-cta {
+  background: var(--teal); color: var(--navy);
+  border: none; border-radius: 8px;
+  padding: 8px 18px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: var(--font-body);
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+/* HERO */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 5rem 2rem 2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+}
+.hero-left { padding-top: 1rem; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--teal); border: 1px solid var(--teal-dim);
+  background: var(--teal-glow);
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 1.5rem;
+}
+.hero-tag .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 1.25rem;
+}
+h1 em { font-style: italic; color: var(--teal); }
+.hero-sub {
+  font-size: 17px; color: var(--cream-muted);
+  line-height: 1.65; margin-bottom: 2rem; max-width: 420px;
+}
+.hero-sub strong { color: var(--cream); font-weight: 400; }
+.audience-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.5rem; }
+.chip {
+  font-size: 12px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid var(--navy-border); color: var(--cream-muted);
+  background: var(--navy-card);
+}
+.hero-waitlist { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.email-input {
+  flex: 1; min-width: 200px;
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  color: var(--cream); border-radius: 8px; padding: 11px 16px;
+  font-size: 14px; font-family: var(--font-body); outline: none;
+  transition: border-color 0.2s;
+}
+.email-input::placeholder { color: var(--cream-faint); }
+.email-input:focus { border-color: var(--teal); }
+.join-btn {
+  background: var(--teal); color: var(--navy);
+  border: none; border-radius: 8px; padding: 11px 22px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  font-family: var(--font-body); white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.join-btn:hover { opacity: 0.85; }
+.hero-trust { font-size: 12px; color: var(--cream-faint); display: flex; align-items: center; gap: 6px; }
+.hero-trust span { color: var(--teal); font-size: 14px; }
+
+/* CALCULATOR CARD (right side) */
+.calc-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: slideUp 0.6s ease both;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.calc-header {
+  background: var(--navy-mid);
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--navy-border);
+}
+.calc-dots { display: flex; gap: 6px; }
+.calc-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.calc-title { font-size: 13px; color: var(--cream-muted); margin-left: auto; margin-right: auto; }
+.calc-body { padding: 18px; }
+.c-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.c-field { display: flex; flex-direction: column; gap: 5px; }
+.c-label { font-size: 11px; color: var(--cream-faint); letter-spacing: 0.04em; text-transform: uppercase; }
+.c-input, .c-select {
+  background: var(--navy); border: 1px solid var(--navy-border);
+  color: var(--cream); border-radius: 7px; padding: 9px 12px;
+  font-size: 13px; font-family: var(--font-body); outline: none;
+  transition: border-color 0.2s; width: 100%;
+}
+.c-input:focus, .c-select:focus { border-color: var(--teal); }
+.c-select option { background: var(--navy-mid); }
+.visa-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.v-pill {
+  font-size: 11px; padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--navy-border); color: var(--cream-muted);
+  background: transparent; cursor: pointer; font-family: var(--font-body);
+  transition: all 0.15s;
+}
+.v-pill.on { background: var(--teal-glow); border-color: var(--teal-dim); color: var(--teal); }
+.result-banner {
+  background: var(--navy); border-radius: 10px;
+  padding: 14px 16px; margin-top: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.r-label { font-size: 11px; color: var(--cream-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+.r-amount { font-family: var(--font-display); font-size: 26px; color: var(--teal); }
+.r-period { font-size: 11px; color: var(--cream-faint); }
+.stacked-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 1px; margin: 10px 0 6px; }
+.bar-seg { height: 100%; transition: width 0.4s; }
+.mini-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.ml-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--cream-faint); }
+.ml-dot { width: 6px; height: 6px; border-radius: 2px; flex-shrink: 0; }
+.fica-note {
+  font-size: 11px; color: var(--teal);
+  background: var(--teal-glow); border: 1px solid var(--teal-dim);
+  border-radius: 6px; padding: 7px 10px; margin-top: 8px;
+  display: none; line-height: 1.4;
+}
+
+/* DIVIDER */
+.section-divider { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+.divider-line { border: none; border-top: 1px solid var(--navy-border); margin: 3rem 0; }
+
+/* HOW IT WORKS */
+.how { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+.section-eyebrow { font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+.how h2 { font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); color: var(--cream); margin-bottom: 3rem; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.step {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 14px; padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.step:hover { border-color: rgba(29,191,160,0.3); }
+.step-num { font-size: 11px; color: var(--teal); font-weight: 500; letter-spacing: 0.06em; margin-bottom: 10px; }
+.step-icon { font-size: 24px; margin-bottom: 12px; }
+.step h3 { font-size: 15px; font-weight: 500; color: var(--cream); margin-bottom: 6px; }
+.step p { font-size: 13px; color: var(--cream-muted); line-height: 1.55; }
+
+/* TOPICS GRID */
+.topics-section { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+.topics-section h2 { font-family: var(--font-display); font-size: clamp(28px,3.5vw,40px); color: var(--cream); margin-bottom: 0.5rem; }
+.topics-section .sub { color: var(--cream-muted); font-size: 15px; margin-bottom: 2.5rem; }
+.topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--navy-border); border: 1px solid var(--navy-border); border-radius: 14px; overflow: hidden; }
+.topic-cell {
+  background: var(--navy-card); padding: 1.5rem;
+  transition: background 0.2s;
+  cursor: default;
+}
+.topic-cell:hover { background: #1E2840; }
+.topic-icon { font-size: 20px; margin-bottom: 10px; }
+.topic-cell h3 { font-size: 15px; font-weight: 500; color: var(--cream); margin-bottom: 6px; }
+.topic-cell p { font-size: 13px; color: var(--cream-muted); line-height: 1.55; }
+.topic-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-top: 8px; }
+.tag-f1 { background: rgba(29,191,160,0.12); color: var(--teal); border: 1px solid var(--teal-dim); }
+.tag-all { background: rgba(74,143,216,0.12); color: var(--blue); border: 1px solid rgba(74,143,216,0.3); }
+
+/* SOCIAL PROOF */
+.proof { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+.proof h2 { font-family: var(--font-display); font-size: clamp(28px,3.5vw,40px); color: var(--cream); margin-bottom: 2.5rem; }
+.quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.quote-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 1.5rem; }
+.quote-text { font-size: 14px; color: var(--cream-muted); line-height: 1.65; margin-bottom: 1rem; font-style: italic; }
+.quote-author { display: flex; align-items: center; gap: 10px; }
+.q-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; }
+.q-name { font-size: 13px; color: var(--cream); font-weight: 500; }
+.q-role { font-size: 11px; color: var(--cream-faint); }
+
+/* FINAL CTA */
+.final-cta {
+  max-width: 1100px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+.cta-box {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 20px; padding: 3.5rem 2rem; text-align: center;
+}
+.cta-box h2 { font-family: var(--font-display); font-size: clamp(28px,3.5vw,42px); color: var(--cream); margin-bottom: 1rem; }
+.cta-box p { color: var(--cream-muted); font-size: 16px; margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+.cta-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
+.cta-form input {
+  flex: 1; background: var(--navy); border: 1px solid var(--navy-border);
+  color: var(--cream); border-radius: 8px; padding: 12px 16px;
+  font-size: 14px; font-family: var(--font-body); outline: none;
+  transition: border-color 0.2s;
+}
+.cta-form input:focus { border-color: var(--teal); }
+.cta-form button {
+  background: var(--teal); color: var(--navy); border: none;
+  border-radius: 8px; padding: 12px 22px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: var(--font-body); white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.cta-form button:hover { opacity: 0.85; }
+.success-msg { color: var(--teal); font-size: 14px; margin-top: 1rem; display: none; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--navy-border);
+  max-width: 1100px; margin: 0 auto; padding: 2rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { font-family: var(--font-display); font-size: 18px; color: var(--cream); }
+.footer-note { font-size: 12px; color: var(--cream-faint); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 12px; color: var(--cream-faint); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--cream-muted); }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--navy-card); border: 1px solid var(--teal-dim);
+  color: var(--cream); font-size: 14px; padding: 12px 24px;
+  border-radius: 10px; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 2.5rem; }
+  .c-field-row { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; text-align: center; }
+  .cta-form { flex-direction: column; }
+}
+
+/* ANIMATIONS */
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="dot"></span> Fin
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#topics">Topics</a>
+    <a href="#waitlist">Join waitlist</a>
+  </div>
+  <a class="nav-cta" href="#waitlist">Get early access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- LEFT -->
+  <div class="hero-left fade-in">
+    <div class="hero-tag"><span class="pulse"></span> Built for F1 &amp; OPT professionals</div>
+    <h1>Your US paycheck,<br><em>finally</em> explained.</h1>
+    <p class="hero-sub">
+      You earned a <strong>great salary</strong>. But between FICA, federal withholding, state taxes, and W-2 confusion — it can feel like half your money disappears. <strong>Fin translates it all</strong>, for free.
+    </p>
+    <div class="audience-chips">
+      <span class="chip">F1 students</span>
+      <span class="chip">OPT &amp; STEM OPT</span>
+      <span class="chip">First US job</span>
+      <span class="chip">$60k–$120k salary</span>
+      <span class="chip">H-1B transition</span>
+    </div>
+    <div class="hero-waitlist" id="waitlist">
+      <input class="email-input" type="email" id="hero-email" placeholder="your@email.com">
+      <button class="join-btn" onclick="heroSignup()">Join waitlist →</button>
+    </div>
+    <div class="hero-trust"><span>✓</span> Free to use &nbsp;·&nbsp; <span>✓</span> No account needed &nbsp;·&nbsp; <span>✓</span> Not tax advice</div>
+  </div>
+
+  <!-- RIGHT: LIVE CALCULATOR -->
+  <div class="calc-card">
+    <div class="calc-header">
+      <div class="calc-dots">
+        <span style="background:#E8604A"></span>
+        <span style="background:#F0A93A"></span>
+        <span style="background:#1DBFA0"></span>
+      </div>
+      <span class="calc-title">Paycheck breakdown — live</span>
+    </div>
+    <div class="calc-body">
+      <div class="c-field-row">
+        <div class="c-field">
+          <span class="c-label">Annual salary</span>
+          <input class="c-input" type="number" id="c-salary" value="85000" min="30000" max="300000" step="1000" oninput="calcUpdate()">
+        </div>
+        <div class="c-field">
+          <span class="c-label">State</span>
+          <select class="c-select" id="c-state" onchange="calcUpdate()">
+            <option value="0">No state tax</option>
+            <option value="0.093" selected>California (~9.3%)</option>
+            <option value="0.0685">New York (~6.85%)</option>
+            <option value="0.0685">New Jersey (~6.85%)</option>
+            <option value="0.0575">Virginia (5.75%)</option>
+            <option value="0.0575">Oregon (~8.75%)</option>
+            <option value="0.0495">Illinois (4.95%)</option>
+            <option value="0.0525">Maryland (5.25%)</option>
+            <option value="0.0499">Georgia (5%)</option>
+            <option value="0.037">Utah (4.65%)</option>
+            <option value="0.05">North Carolina (5%)</option>
+            <option value="0.032">Massachusetts (~5%)</option>
+            <option value="0.07">Washington DC (~8.5%)</option>
+          </select>
+        </div>
+      </div>
+      <div class="c-field-row">
+        <div class="c-field">
+          <span class="c-label">Pay period</span>
+          <select class="c-select" id="c-period" onchange="calcUpdate()">
+            <option value="26">Biweekly (26×/yr)</option>
+            <option value="24">Semimonthly (24×)</option>
+            <option value="12">Monthly (12×)</option>
+            <option value="52">Weekly (52×)</option>
+          </select>
+        </div>
+        <div class="c-field">
+          <span class="c-label">Filing status</span>
+          <select class="c-select" id="c-filing" onchange="calcUpdate()">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+          </select>
+        </div>
+      </div>
+      <span class="c-label" style="display:block;margin-bottom:6px">Visa status</span>
+      <div class="visa-pills">
+        <button class="v-pill on" id="vp-f1" onclick="setVisa('f1',this)">F1/OPT ≤5 yrs</button>
+        <button class="v-pill" id="vp-h1b" onclick="setVisa('h1b',this)">H-1B / STEM OPT</button>
+        <button class="v-pill" id="vp-gc" onclick="setVisa('gc',this)">Green card</button>
+      </div>
+      <div id="fica-note" class="fica-note"></div>
+      <div class="result-banner">
+        <div>
+          <div class="r-label">Take-home</div>
+          <div class="r-amount" id="r-amount">—</div>
+          <div class="r-period" id="r-period">per paycheck</div>
+        </div>
+        <div style="text-align:right">
+          <div class="r-label">Effective rate</div>
+          <div style="font-size:20px;color:#A89F90;font-family:'DM Serif Display',serif" id="r-eff">—</div>
+          <div class="r-period">total tax burden</div>
+        </div>
+      </div>
+      <div class="stacked-bar" id="stacked-bar"></div>
+      <div class="mini-legend" id="mini-legend"></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr class="divider-line"></div>
+
+<!-- HOW IT WORKS -->
+<section class="how fade-in" id="how">
+  <p class="section-eyebrow">How it works</p>
+  <h2>Three things Fin does<br>that no one else does.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">🧮</div>
+      <h3>Breaks down your paycheck</h3>
+      <p>Enter your salary, state, and visa status. See exactly where every dollar goes — federal tax, state, FICA, and more — per paycheck.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🌐</div>
+      <h3>Knows your visa situation</h3>
+      <p>F1 students are exempt from FICA for their first 5 years. Fin knows this — and dozens of other rules specific to international workers.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">💬</div>
+      <h3>Answers your questions in plain English</h3>
+      <p>Ask Fin anything — "Why do I owe taxes?", "What's a W-2?", "Am I a resident alien?" — and get a clear, jargon-free answer in seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-icon">📦</div>
+      <h3>Helps you plan your move</h3>
+      <p>Relocating for your first US job? Fin walks you through a realistic first-month budget so you're not caught off guard.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr class="divider-line"></div>
+
+<!-- TOPICS -->
+<section class="topics-section fade-in" id="topics">
+  <p class="section-eyebrow">What Fin covers</p>
+  <h2>Every question you were<br>too afraid to Google.</h2>
+  <p class="sub">Fin specializes in the exact topics that confuse international early-career professionals — no general advice, no fluff.</p>
+  <div class="topics-grid">
+    <div class="topic-cell">
+      <div class="topic-icon">🧾</div>
+      <h3>Paycheck deductions</h3>
+      <p>What is FICA? Why is my gross pay so different from my net? What are pre-tax deductions and why should I care?</p>
+      <span class="topic-tag tag-all">All visa types</span>
+    </div>
+    <div class="topic-cell">
+      <div class="topic-icon">📄</div>
+      <h3>W-2 &amp; tax forms</h3>
+      <p>When do I get it? What does each box mean? Do I need a W-2 if I'm on OPT? What if my address is wrong?</p>
+      <span class="topic-tag tag-all">All visa types</span>
+    </div>
+    <div class="topic-cell">
+      <div class="topic-icon">⚖️</div>
+      <h3>Tax withholding</h3>
+      <p>How do I fill out a W-4? Am I withholding too much or too little? What happens if I under-withhold?</p>
+      <span class="topic-tag tag-all">All visa types</span>
+    </div>
+    <div class="topic-cell">
+      <div class="topic-icon">🏠</div>
+      <h3>Relocation budgeting</h3>
+      <p>What's a realistic first-month cost in NYC or SF? Is my relocation stipend taxable? What do F1 students forget?</p>
+      <span class="topic-tag tag-f1">F1 / OPT</span>
+    </div>
+    <div class="topic-cell">
+      <div class="topic-icon">🪪</div>
+      <h3>Tax residency status</h3>
+      <p>Am I a resident or nonresident alien? What is the substantial presence test? What form do I file — 1040 or 1040-NR?</p>
+      <span class="topic-tag tag-f1">F1 / OPT</span>
+    </div>
+    <div class="topic-cell">
+      <div class="topic-icon">❓</div>
+      <h3>Why do I owe taxes?</h3>
+      <p>My employer withheld taxes — so why do I still owe? What is a tax refund vs a tax bill? I had two jobs last year…</p>
+      <span class="topic-tag tag-all">All visa types</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr class="divider-line"></div>
+
+<!-- SOCIAL PROOF -->
+<section class="proof fade-in">
+  <p class="section-eyebrow">Early users</p>
+  <h2>What people are saying.</h2>
+  <div class="quotes">
+    <div class="quote-card">
+      <p class="quote-text">"I had no idea F1 students don't pay Social Security tax. My employer was withholding it and I had no idea I could get it back. Fin caught that in 30 seconds."</p>
+      <div class="quote-author">
+        <div class="q-avatar" style="background:rgba(29,191,160,0.15);color:#1DBFA0">PK</div>
+        <div>
+          <div class="q-name">Priya K.</div>
+          <div class="q-role">Software engineer, OPT · Bay Area</div>
+        </div>
+      </div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"I got my first W-2 and had no idea what Box 12 meant. I asked Fin and it explained everything in plain English — better than any YouTube video."</p>
+      <div class="quote-author">
+        <div class="q-avatar" style="background:rgba(74,143,216,0.15);color:#4A8FD8">JL</div>
+        <div>
+          <div class="q-name">Jian L.</div>
+          <div class="q-role">Data analyst, STEM OPT · New York</div>
+        </div>
+      </div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"The relocation budget tool saved me from a really bad situation. I didn't realize a first month in Seattle would cost almost $7k all-in. Fin walked me through everything."</p>
+      <div class="quote-author">
+        <div class="q-avatar" style="background:rgba(240,169,58,0.15);color:#F0A93A">AM</div>
+        <div>
+          <div class="q-name">Aditya M.</div>
+          <div class="q-role">Product manager, H-1B · Seattle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta fade-in" id="waitlist-bottom">
+  <div class="cta-box">
+    <p class="section-eyebrow" style="margin-bottom:0.75rem">Join the waitlist</p>
+    <h2>Stop guessing.<br>Start understanding.</h2>
+    <p>Join hundreds of international professionals who are getting clarity on their US finances — for free.</p>
+    <div class="cta-form">
+      <input type="email" id="cta-email" placeholder="your@email.com">
+      <button onclick="ctaSignup()">Get early access →</button>
+    </div>
+    <p class="success-msg" id="cta-success">✓ You're on the list! We'll be in touch soon.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fin</div>
+  <div class="footer-note">For educational purposes only. Not tax or legal advice. Consult a CPA for your specific situation.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="mailto:hello@fin.app">Contact</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const FED_SINGLE = [
+  {up:11600,rate:0.10},{up:47150,rate:0.12},{up:100525,rate:0.22},
+  {up:191950,rate:0.24},{up:243725,rate:0.32},{up:609350,rate:0.35},{up:Infinity,rate:0.37}
+];
+const FED_MFJ = [
+  {up:23200,rate:0.10},{up:94300,rate:0.12},{up:201050,rate:0.22},
+  {up:383900,rate:0.24},{up:487450,rate:0.32},{up:731200,rate:0.35},{up:Infinity,rate:0.37}
+];
+const STD = {single:14600,mfj:29200};
+const COLORS = {takeHome:'#1DBFA0',federal:'#4A8FD8',state:'#9B8FD8',fica:'#E8604A',medicare:'#F0A93A'};
+
+let cVisa = 'f1';
+
+function setVisa(v, btn) {
+  cVisa = v;
+  document.querySelectorAll('.v-pill').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  calcUpdate();
+}
+
+function fedTax(taxable, filing) {
+  const brackets = filing === 'mfj' ? FED_MFJ : FED_SINGLE;
+  let tax = 0, prev = 0;
+  for (const b of brackets) {
+    if (taxable <= prev) break;
+    const chunk = Math.min(taxable, b.up) - prev;
+    tax += chunk * b.rate;
+    prev = b.up;
+  }
+  return Math.max(0, tax);
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+function calcUpdate() {
+  const salary = parseFloat(document.getElementById('c-salary').value) || 85000;
+  const statePct = parseFloat(document.getElementById('c-state').value) || 0;
+  const periods = parseFloat(document.getElementById('c-period').value) || 26;
+  const filing = document.getElementById('c-filing').value;
+
+  const taxable = Math.max(0, salary - STD[filing]);
+  const fedAnnual = fedTax(taxable, filing);
+  const stateAnnual = taxable * statePct;
+  let social = 0, medicare = 0;
+  if (cVisa !== 'f1') {
+    social = Math.min(salary, 168600) * 0.062;
+    medicare = salary * 0.0145;
+  }
+  const totalTax = fedAnnual + stateAnnual + social + medicare;
+  const takeHome = salary - totalTax;
+  const perPay = n => Math.round(n / periods);
+  const effRate = ((totalTax / salary) * 100).toFixed(1);
+
+  document.getElementById('r-amount').textContent = fmt(perPay(takeHome));
+  document.getElementById('r-period').textContent = `per paycheck · ${fmt(takeHome)}/yr`;
+  document.getElementById('r-eff').textContent = effRate + '%';
+
+  const segs = [
+    {label:'Take-home', val: takeHome, color: COLORS.takeHome},
+    {label:'Federal tax', val: fedAnnual, color: COLORS.federal},
+    {label:'State tax', val: stateAnnual, color: COLORS.state},
+    {label:'Social Security', val: social, color: COLORS.fica},
+    {label:'Medicare', val: medicare, color: COLORS.medicare},
+  ].filter(s => s.val > 0);
+
+  const bar = document.getElementById('stacked-bar');
+  const leg = document.getElementById('mini-legend');
+  bar.innerHTML = ''; leg.innerHTML = '';
+  segs.forEach(s => {
+    const w = ((s.val / salary) * 100).toFixed(2);
+    bar.innerHTML += `<div class="bar-seg" style="width:${w}%;background:${s.color};min-width:${s.val>0?2:0}px"></div>`;
+    leg.innerHTML += `<span class="ml-item"><span class="ml-dot" style="background:${s.color}"></span>${s.label}</span>`;
+  });
+
+  const note = document.getElementById('fica-note');
+  if (cVisa === 'f1') {
+    note.style.display = 'block';
+    note.textContent = '✓ As an F1/OPT student (≤5 yrs), you\'re exempt from Social Security & Medicare — saving you ~' + fmt((Math.min(salary,168600)*0.062 + salary*0.0145)) + '/yr.';
+  } else {
+    note.style.display = 'none';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function heroSignup() {
+  const email = document.getElementById('hero-email').value.trim();
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email.'); return; }
+  showToast('✓ You\'re on the list! Talk soon.');
+  document.getElementById('hero-email').value = '';
+}
+
+function ctaSignup() {
+  const email = document.getElementById('cta-email').value.trim();
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email.'); return; }
+  document.getElementById('cta-success').style.display = 'block';
+  document.getElementById('cta-email').value = '';
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+calcUpdate();
+</script>
+</body>
+</html>
